@@ -12,11 +12,12 @@ Find.find(origin) do |path|
       move_path   = path.sub(origin, target)
       puts "Moving #{path} to #{move_path}"
       begin
-        Dir.mkdir(mkdir_path)
-      rescue
-        puts "Can't create #{mkdir_path}"
+        FileUtils.mkdir_p mkdir_path
+        FileUtils.mv(path, move_path)
+      rescue Exception => e
+        puts e.message
+        puts e.backtrace.inspect
       end
-      FileUtils.mv(path, move_path)
     end
   end
 end
